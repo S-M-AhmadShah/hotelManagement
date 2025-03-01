@@ -19,7 +19,8 @@ class User extends Authenticatable {
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'last_name', 'phone', 'is_admin'
+        'name', 'email', 'password', 'last_name', 'phone', 'is_admin','profile_picture', // Ensure this is included
+
     ];
 
     /**
@@ -46,4 +47,9 @@ class User extends Authenticatable {
 
         return $this->hasMany(Order::class, 'user_id', 'id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
 }

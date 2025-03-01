@@ -38,14 +38,6 @@ class RoomTypeController extends Controller {
         return redirect()->route('admin.roomtypes.index')
             ->with('message', 'Your list has been created!');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(RoomType $roomType) {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      */

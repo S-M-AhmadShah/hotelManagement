@@ -46,6 +46,7 @@ class AuthController extends Controller {
         $request->validate([
             'name' => ['required', new AlphaSpace, 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'max:15'], // Add validation for phone
             'password' => ['required',
                 Password::min(6)
                     ->letters()     // Require at least one letter
@@ -53,13 +54,21 @@ class AuthController extends Controller {
                     ->numbers()     // Require at least one number
                     ->symbols(),    // Require at least one symbol
                 'confirmed'],
-            'password_confirmation' => ['required']
+            'password_confirmation' => ['required'],
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
+        $profilePicturePath = null;
+        if ($request->hasFile('profile_picture')) {
+            $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+        }
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone, // Store the phone number
             'password' => Hash::make($request->password),
+            'profile_picture' => $profilePicturePath,
+
         ]);
 
         Auth::login($user);
@@ -84,7 +93,8 @@ class AuthController extends Controller {
             if ($request->user()->is_admin) {
                 return redirect()->route('admin.index');
             }
-            return redirect()->intended('/');
+            // return redirect()->intended('/');
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
@@ -92,9 +102,13 @@ class AuthController extends Controller {
         ]);
     }
 
+    public function showDashboard(){
+        return view('user.index');
+    }
     /**
      * Destroy an authenticated session.
      */
+
     public function logout(Request $request): RedirectResponse {
 
         Auth::logout();
@@ -102,5 +116,8 @@ class AuthController extends Controller {
         $request->session()->regenerateToken();
 
         return redirect()->route('home');
+
     }
+
 }
+

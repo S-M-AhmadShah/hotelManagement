@@ -8,11 +8,13 @@
             @foreach($rooms as $room)
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ $loop->iteration/10 }}s">
                     <div class="room-item shadow rounded overflow-hidden">
+
                         <div class="position-relative image-container">
                             <img src="{{ asset($room->image) }}" alt="">
                             <small class="position-absolute start-0 top-0 bg-primary
                             text-white rounded py-1 px-3 ms-4">${{ $room->price }}/Night</small>
                         </div>
+
                         <div class="p-4 mt-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h5 class="mb-0">{{ $room->roomtype->name }}</h5>
@@ -31,6 +33,7 @@
                                    href="{{ route('rooms.index') }}">Book Now</a>
                             </div>
                         </div>
+
                     </div>
                 </div>
             @endforeach

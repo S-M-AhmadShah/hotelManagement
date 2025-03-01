@@ -11,12 +11,13 @@
     @include('sections.service')
     <!-- Room -->
     @include('sections.room-container-brief')
-    <!-- Testimonial -->
-    @include('sections.testimonial')
+
+    @include('sections.reviews')
     <!-- Team -->
     @include('sections.team')
     <!-- Newsletter -->
     @include('sections.newsletter')
+
 @endsection
 
 @section('footer')

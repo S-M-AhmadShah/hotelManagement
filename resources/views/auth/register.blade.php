@@ -11,8 +11,9 @@
                 <div class="card shadow-lg">
                     <div class="card-body">
                         <h4 class="card-title my-4 text-center">Create Account</h4>
-                        <form novalidate class="row g-3" method="post" action="{{ route('register') }}">
+                        <form novalidate class="row g-3" method="post" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
+
                             <div class="col-12">
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
@@ -34,6 +35,19 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <div class="col-12">
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autofocus>
+                                    @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="col-12">
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
@@ -54,7 +68,16 @@
                                     @enderror
                                 </div>
                             </div>
-
+                            <div class="col-12">
+                                <div class="input-group">
+                                    <span class="input-group-text"> <i class="fa fa-image"></i> </span>
+                                    <input type="file" name="profile_picture"
+                                           class="form-control @error('profile_picture') is-invalid @enderror">
+                                    @error('profile_picture')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100" type="submit">Create Account</button>
                             </div>
@@ -66,4 +89,3 @@
         </div>
     </div>
 @endsection
-

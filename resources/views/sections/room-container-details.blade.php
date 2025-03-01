@@ -1,10 +1,11 @@
+
 <div class="container-xxl py-5">
-    <div class="container">
+    <div class="container" >
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
             <h6 class="section-title text-center text-primary text-uppercase">Our Rooms</h6>
             <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
         </div>
-        <div class="row g-4">
+        <div class="row g-4" >
             @foreach($rooms as $room)
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{ $loop->iteration/10 }}s">
                     <div class="room-item shadow rounded overflow-hidden">
@@ -25,24 +26,32 @@
                                 </div>
                             </div>
                             <div class="d-flex mb-3">
-                                <small class="border-end me-3 pe-3"><i class="fa fa-bed text-primary me-2"></i>
+                                <small class="border-end me-3 pe-3">
+                                    <i class="fa fa-bed text-primary me-2"></i>
                                     {{ $room->no_beds }}Bed</small>
-                                <small class="border-end me-3 pe-3"><i
-                                        class="fa fa-bath text-primary me-2"></i>Bath</small>
-                                <small><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+
+                                <small class="border-end me-3 pe-3"><i class="fa fa-bath text-primary me-2"></i>Bath</small>
+
+                                <small class="border-end me-3 pe-3"><i class="fa fa-wifi text-primary me-2"></i>Wifi</small>
+                                <small class=" me-3 pe-3"><i class="fa fa-hourglass-half text-primary me-2"></i>Services</small>
                             </div>
                             <p class="text-body mb-3">{{ $room->desc }}</p>
                             <div class="d-flex">
                                 @if(isset($searched))
-                                    <form method="post" action="{{ route('orders.store') }}">
+                                    {{-- <form method="post" action="{{ route('orders.store') }}">
                                         @csrf
                                         <div class="d-none">
                                             <input type="date" name="check_in" value="{{ $fields['check_in'] }}">
                                             <input type="text" name="check_out" value="{{ $fields['check_out'] }}">
                                             <input type="number" name="room_id" value="{{ $room->id }}">
+                                            <input type="booked_rooms_count" name="booked_rooms_count" value="{{ $room->booked_rooms_count }}">
                                         </div>
-                                        <button type="submit" class="btn btn-sm btn-success rounded py-2 px-4">Reserve
-                                        </button>
+                                    </form> --}}
+                                    <form method="post" action="{{ route('pay.jazzcash') }}">
+                                        @csrf
+                                        <input type="hidden" name="room_id" value="{{ $room->id }}">
+                                        <input type="hidden" name="amount" value="{{ $room->price }}">
+                                        <button type="submit" class="btn btn-sm btn-success rounded py-2 px-4">Reserve</button>
                                     </form>
                                 @endif
                             </div>

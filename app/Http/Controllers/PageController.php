@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use App\Models\RoomType;
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -15,13 +16,14 @@ class PageController extends Controller {
     public function index(): View {
 
         $rooms = Room::with('roomtype')->where('status', 1)->get();
-        return view('pages.home', compact('rooms'));
+        $reviews = Review::where('is_approved', 1)->get();
+        return view('pages.home', compact('rooms', 'reviews'));
     }
 
     public function list_rooms() {
-
         $rooms = Room::with('roomtype')->where('status', 1)->get();
-        return view('pages.list-rooms', compact('rooms'));
+        $reviews = Review::where('is_approved', 1)->get(); // Approved reviews
+        return view('pages.list-rooms', compact('rooms', 'reviews'));
     }
 
     public function search(Request $request) {
@@ -31,14 +33,29 @@ class PageController extends Controller {
             'check_out' => ['required', 'date', 'after:check_in'],
             'no_peron' => ['required']
         ]);
-        $rooms = Room::with('roomtype')->where('status', 1)
-            ->whereHas('orders', function (Builder $query) use ($validatedData) {
-                $query->whereBetween('check_in', [$validatedData['check_in'], $validatedData['check_out']])
-                    ->orWhereBetween('check_out', [$validatedData['check_in'], $validatedData['check_out']]);
-            }, '<', DB::raw('rooms.total_room'))->get();
+
+        $rooms = Room::with('roomtype')
+    ->where('status', 1)
+    ->whereHas('orders', function (Builder $query) use ($validatedData) {
+        $query->whereBetween('check_in', [$validatedData['check_in'], $validatedData['check_out']])
+            ->orWhereBetween('check_out', [$validatedData['check_in'], $validatedData['check_out']]);
+    }, '<', DB::raw('rooms.total_room'))
+    ->withCount([
+        'orders as booked_rooms_count' => function (Builder $query) use ($validatedData) {
+            $query->whereBetween('check_in', [$validatedData['check_in'], $validatedData['check_out']])
+                ->orWhereBetween('check_out', [$validatedData['check_in'], $validatedData['check_out']]);
+        }
+    ])
+    ->get()
+    ->each(function ($room) {
+        $room->not_booked_rooms_count = $room->total_room - $room->booked_rooms_count;
+    });
+    // dd($rooms);
+
         $searched = true;
         $fields = $validatedData;
-        return view('pages.list-rooms', compact('rooms', 'searched', 'fields'));
+        $reviews = Review::where('is_approved', 1)->get(); // Approved reviews
+        return view('pages.list-rooms', compact('rooms', 'searched', 'fields', 'reviews'));
     }
 
     public function showProfile() {

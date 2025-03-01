@@ -23,7 +23,9 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('admin.*', function ($view) {
             $view->with('adminView', true);
         });
-
+        View::composer('user.*', function ($view) {
+            $view->with('userView', true);
+        });
         if ($this->app->environment('production')) {
             $this->app['request']->server->set('HTTPS','on');
             URL::forceScheme('https');

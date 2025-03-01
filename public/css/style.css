@@ -90,6 +90,12 @@
 .navbar-dark .navbar-nav .nav-link.active {
     color: var(--primary);
 }
+.u-icon{
+    position: absolute;
+    left: -135px;
+    right: 10px;
+    top: 55px;
+}
 
 @media (max-width: 991.98px) {
     .navbar-dark .navbar-nav .nav-link  {
@@ -510,4 +516,45 @@
     top: 0;
     bottom: 0;
     margin: auto;
+}
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    font-size: 2rem; /* Adjust size as needed */
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: #ccc; /* Default star color */
+    cursor: pointer;
+    margin: 0;
+    transition: color 0.2s;
+}
+
+.star-rating input:checked ~ label {
+    color: #ffc107; /* Highlight color for selected stars */
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffc107; /* Highlight stars on hover */
+}
+.container{
+    width: 50%;
+    justify-content: center;
+    margin-top: 2%;
+    @media (min-width: 344px) {
+    width: 100%;
+    height: 50%;
+    margin-top: 2%;
+    justify-content: center;
+    }
+}
+.card-dashboard:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
 }
