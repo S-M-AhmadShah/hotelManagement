@@ -1,4 +1,4 @@
-@extends('layouts.app')
+ @extends('layouts.app')
 
 @section('header')
     @include('layouts.header')
@@ -58,4 +58,4 @@
 
 @section('footer')
     @include('layouts.footer')
-@endsection
+@endsection 

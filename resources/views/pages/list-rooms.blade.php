@@ -9,8 +9,8 @@
                 <h1 class="display-3 text-white mb-3 animated slideInDown">Rooms</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center text-uppercase">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('rooms.index') }}">Pages</a></li>
                         <li class="breadcrumb-item text-white active" aria-current="page">Rooms</li>
                     </ol>
                 </nav>
@@ -20,17 +20,17 @@
     <!-- Page Header End -->
     <!-- Booking -->
     @include('sections.booking-header')
+
+        @section('content')
+            <!-- Room -->
+            @include('sections.room-container-details')
+            <!-- Testimonial -->
+            @include('sections.reviews')
+
+        @endsection
+
+        @section('footer')
+            @include('layouts.footer')
+        @endsection
 @endsection
 
-@section('content')
-    <!-- Room -->
-    @include('sections.room-container-details')
-    <!-- Testimonial -->
-    @include('sections.testimonial')
-    <!-- Newsletter -->
-    @include('sections.newsletter')
-@endsection
-
-@section('footer')
-    @include('layouts.footer')
-@endsection

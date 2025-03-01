@@ -16,6 +16,7 @@ class Order extends Model {
         'check_out',
         'room_id',
         'user_id',
+        'room_no',
     ];
 
     protected $appends = ['stayDays'];

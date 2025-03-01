@@ -19,6 +19,7 @@
                     <th scope="col">Total Rooms</th>
                     <th scope="col">No of Beds</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Service & laundry</th>
                     <th scope="col">Image</th>
                     <th scope="col">Status</th>
                     <th>Action</th>
@@ -32,6 +33,7 @@
                         <td>{{ $room->total_room }}</td>
                         <td>{{ $room->no_beds }}</td>
                         <td>{{ $room->price }}</td>
+                        <td> 25$ , 15$</td>
                         <td><img src="{{ asset($room->image) }}" width="50" height="40"></td>
                         @if($room->status)
                         <td class="text-success">Active</td>
@@ -41,8 +43,8 @@
                         <td>
                             <div class="btn-group" role="group">
                                 <form method="post"
-                                      action="{{ route('admin.rooms.destroy', ['room' => $room->id]) }}">
-                                    @csrf
+                                action="{{ route('admin.rooms.destroy', ['room' => $room->id]) }}">
+                                @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-danger">
                                         <i class="fa-solid fa-trash-can"></i>
@@ -60,6 +62,7 @@
                 @endforelse
                 </tbody>
             </table>
+
         </div>
     </div>
 @endsection

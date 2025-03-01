@@ -5,11 +5,12 @@
         </a>
         <div class="dropdown pb-4">
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                <span class="d-none d-sm-inline mx-1">admin</span>
+                <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                <span class="d-none d-sm-inline mx-1"> {{ Auth::user()->name }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><form method="post" action="{{ route('logout') }}">
+                <li>
+                    <form method="post" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="btn btn-link dropdown-item">Sign out</button>
                     </form>
@@ -37,11 +38,19 @@
             </li>
             <li>
                 <a href="{{ route('admin.rooms.index') }}" class="nav-link px-0 align-middle">
-                    <i class="fs-4 bi-grid"></i> <span class="ms-1 d-none d-sm-inline">Rooms</span></a>
+                    <i class="fs-4 bi bi-door-closed"></i> <span class="ms-1 d-none d-sm-inline">Rooms</span></a>
             </li>
             <li>
-                <a href="#" class="nav-link px-0 align-middle">
+                <a href="{{ route('admin.customers') }}" class="nav-link px-0 align-middle">
                     <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Customers</span> </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.reviews') }}" class="nav-link px-0 align-middle">
+                    <i class="fs-4 bi bi-hand-thumbs-up"></i> <span class="ms-1 d-none d-sm-inline">Reviews</span> </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.deleted-orders.index') }}" class="nav-link px-0 align-middle">
+                    <i class="fa-solid fa-file-circle-xmark"></i> <span class="ms-1 d-none d-sm-inline">Deleted Orders</span> </a>
             </li>
         </ul>
     </div>

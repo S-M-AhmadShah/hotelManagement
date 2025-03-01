@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller {
 
+
     /**
      * Display a listing of the resource.
      */
@@ -59,14 +60,6 @@ class RoomController extends Controller {
         return redirect()->route('admin.rooms.index')
             ->with('message', 'Room has been created!');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Room $room) {
-        //
-    }
-
     /**
      * Show the form for editing the specified resource.
      */
@@ -124,4 +117,5 @@ class RoomController extends Controller {
         return redirect()->route('admin.rooms.index')
             ->with('message', 'Room has been deleted!');
     }
+
 }
