@@ -182,6 +182,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
@@ -198,6 +199,8 @@ return [
         //Data table service provider
         Yajra\DataTables\DataTablesServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        // Akcybex\Jazzcash\JazzcashServiceProvider::class,
+        AKCybex\JazzCash\AKJazzCashServiceProvider::class,
     ],
 
     /*
@@ -214,6 +217,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'JazzCash' => AKCybex\JazzCash\Facades\JazzCash::class,
     ])->toArray(),
 
 ];
