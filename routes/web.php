@@ -79,6 +79,7 @@ Route::post('/orders/{id}/cancel', [OrderController::class, 'cancelOrder'])->nam
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::get('/download-booking-csv', [AdminController::class, 'downloadBookingCSV'])->name('download.booking.csv');
 Route::get('/admin/deleted-orders', [DeletedOrderController::class, 'index'])->name('admin.deleted-orders.index');
-Route::post('/reserve/pay', [PaymentController::class, 'payWithJazzCash'])->name('pay.jazzcash');
-Route::get('/payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
+Route::post('/pay/jazzcash', [PaymentController::class, 'payWithJazzCash'])->name('pay.jazzcash');
+Route::post('/payment/response', [PaymentController::class, 'jazzcashResponse'])->name('payment.response')->withoutMiddleware('auth');;
+// Route::get('/payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
 
