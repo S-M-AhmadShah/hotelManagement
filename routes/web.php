@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\MealController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\OrderController;
@@ -79,7 +81,17 @@ Route::post('/orders/{id}/cancel', [OrderController::class, 'cancelOrder'])->nam
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::get('/download-booking-csv', [AdminController::class, 'downloadBookingCSV'])->name('download.booking.csv');
 Route::get('/admin/deleted-orders', [DeletedOrderController::class, 'index'])->name('admin.deleted-orders.index');
+
 Route::post('/pay/jazzcash', [PaymentController::class, 'payWithJazzCash'])->name('pay.jazzcash');
 Route::post('/payment/response', [PaymentController::class, 'jazzcashResponse'])->name('payment.response')->withoutMiddleware('auth');;
 // Route::get('/payment/callback', [PaymentController::class, 'paymentCallback'])->name('payment.callback');
 
+
+Route::get('/menu', [MenuController::class, 'menu'])->name('user.menu');
+Route::get('/menu/breakfast', [MenuController::class, 'breakfast'])->name('menu.breakfast');
+Route::get('/menu/lunch', [MenuController::class, 'lunch'])->name('menu.lunch');
+Route::get('/menu/dinner', [MenuController::class, 'dinner'])->name('menu.dinner');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('meals', \App\Http\Controllers\Admin\MealController::class);
+});

@@ -24,9 +24,9 @@ class PaymentController extends Controller
             'pp_Version'          => '1.1',
             'pp_TxnType'          => 'MWALLET',
             'pp_Language'         => 'EN',
-            'pp_MerchantID'       => $merchantId,
+            'pp_MerchantID' => 'MC147890',
             'pp_SubMerchantID'    => '',
-            'pp_Password'         => $password,
+            'pp_Password'         => 'tt9yz2z904',
             'pp_BankID'           => '',
             'pp_ProductID'        => '',
             'pp_TxnRefNo'         => $txnRefNo,
@@ -35,8 +35,8 @@ class PaymentController extends Controller
             'pp_TxnDateTime'      => now()->format('YmdHis'),
             'pp_BillReference'    => 'billRef',
             'pp_Description'      => 'Room Reservation Payment',
-            'pp_TxnExpiryDateTime'=> now()->addMinutes(30)->format('YmdHis'),
-            'pp_ReturnURL'        => route('payment.response'),
+            'pp_TxnExpiryDateTime' => now()->addMinutes(30)->format('YmdHis'),
+            'pp_ReturnURL' => env('JAZZCASH_RETURN_URL', 'http://127.0.0.1:8000/payment/response'),
             'pp_SecureHash'       => '',
             'ppmpf_1'             => '1',
             'ppmpf_2'             => '2',
@@ -66,36 +66,36 @@ class PaymentController extends Controller
      */
     public function jazzcashResponse(Request $request)
     {
-        // Your JazzCash Integrity Salt
-        $integritySalt = env('JAZZCASH_SALT', ''); // Replace with your actual integrity salt
+        // Integrity salt
+        $integritySalt = env('JAZZCASH_SALT', '');
 
-        // Get all response data except pp_SecureHash
+        // Get and log response data
         $responseData = $request->all();
+        //dd($responseData);
+        \Log::info('Response Data: ', $responseData);
         $secureHash = $responseData['pp_SecureHash'] ?? '';
         unset($responseData['pp_SecureHash']);
 
-        // Sort data by key
+        // Sort and calculate hash
         ksort($responseData);
-
-        // Generate the hash string
         $hashString = $integritySalt;
         foreach ($responseData as $key => $value) {
             if (!empty($value)) {
                 $hashString .= '&' . $value;
             }
         }
-
-        // Calculate hash
         $calculatedHash = hash_hmac('sha256', $hashString, $integritySalt);
 
-        // Validate the hash
+        \Log::info('Calculated Hash: ' . $calculatedHash);
+        \Log::info('Provided Hash: ' . $secureHash);
+
+        // Check hash and response code
         if ($calculatedHash === $secureHash && $responseData['pp_ResponseCode'] === '000') {
-            // Payment succeeded
+
             return view('payment-success', ['message' => 'Payment Successful!']);
         }
-
-        // Payment failed or hash mismatch
         return view('payment-failed', ['message' => $responseData['pp_ResponseMessage'] ?? 'Payment Failed!']);
     }
+
 
 }
