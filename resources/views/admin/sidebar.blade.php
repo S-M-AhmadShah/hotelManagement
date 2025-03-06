@@ -52,6 +52,10 @@
                 <a href="{{ route('admin.deleted-orders.index') }}" class="nav-link px-0 align-middle">
                     <i class="fa-solid fa-file-circle-xmark"></i> <span class="ms-1 d-none d-sm-inline">Deleted Orders</span> </a>
             </li>
+            <li>
+                <a href="{{ route('admin.meals.index') }}" class="nav-link px-0 align-middle">
+                    <i class="fa-solid fa-file-circle-xmark"></i> <span class="ms-1 d-none d-sm-inline">Menu</span> </a>
+            </li>
         </ul>
     </div>
 </div>
